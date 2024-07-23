@@ -1,22 +1,30 @@
 [project]
-name = "rea-beta-backend-toolsets"
-version = "0.1.0"
-description = "Microservice toolset for REA"
 authors = [
-    {name = "Zalven", email = "zalven.dayao@go.team"},
+  {name = "Zalven", email = "zalven.dayao@go.team"},
 ]
 dependencies = [
-    "requests>=2.32.3",
-    "pre-commit>=3.7.1",
+  "requests>=2.32.3",
+  "pre-commit>=3.7.1",
+  "uvicorn>=0.30.3",
+  "numpy>=2.0.1",
+  "pandas>=2.2.2",
+  "fastapi>=0.111.1",
+  "beautifulsoup4>=4.12.3",
+  "mangum>=0.17.0",
 ]
-requires-python = ">=3.12"
-readme = "README.md"
+description = "Microservice toolset for REA"
 license = {text = "MIT"}
+name = "rea-beta-backend-toolsets"
+readme = "README.md"
+requires-python = ">=3.12"
+version = "0.1.0"
 
 [build-system]
-requires = ["pdm-backend"]
 build-backend = "pdm.backend"
-
+requires = ["pdm-backend"]
 
 [tool.pdm]
 distribution = true
+
+[project.scripts]
+rea_beta_backend_toolsets = "rea_beta_backend_toolsets.main:main"
