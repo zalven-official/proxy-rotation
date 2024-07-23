@@ -1,0 +1,22 @@
+[project]
+name = "rea-beta-backend-toolsets"
+version = "0.1.0"
+description = "Microservice toolset for REA"
+authors = [
+    {name = "Zalven", email = "zalven.dayao@go.team"},
+]
+dependencies = [
+    "requests>=2.32.3",
+    "pre-commit>=3.7.1",
+]
+requires-python = ">=3.12"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+distribution = true
