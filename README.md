@@ -80,15 +80,3 @@ To format the code and check linting, use:
 ```sh
 pre-commit run --all-files
 ```
-
-## Contributing
-
-Please follow the [Contributing Guidelines](CONTRIBUTING.md) for submitting pull requests to this repository.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-This README provides an overview of the setup and usage of the backend toolsets for the REA Beta project. Let me know if you need any further modifications!

@@ -26,5 +26,10 @@ requires = ["pdm-backend"]
 [tool.pdm]
 distribution = true
 
+[tool.pdm.dev-dependencies]
+dev = [
+    "notebook>=7.2.1",
+    "jupyterlab>=4.2.4",
+]
 [project.scripts]
 rea_beta_backend_toolsets = "rea_beta_backend_toolsets.run:main"
