@@ -27,4 +27,4 @@ requires = ["pdm-backend"]
 distribution = true
 
 [project.scripts]
-rea_beta_backend_toolsets = "rea_beta_backend_toolsets.main:main"
+rea_beta_backend_toolsets = "rea_beta_backend_toolsets.run:main"
