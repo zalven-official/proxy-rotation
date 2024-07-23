@@ -4,3 +4,4 @@
 - install conda 3.12
 - install pre-commit
 - add packages using pdm
+-  pdm run tox
