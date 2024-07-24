@@ -1,10 +1,17 @@
 from __future__ import annotations
 
+import random
 import re
+import time
+from concurrent.futures import ThreadPoolExecutor
 
 import requests  # type: ignore
-from rea_beta_backend_toolsets.services.proxies import constants
 
+from .constants import PROXY_PROXY_CHECKER_URL
+from .constants import PROXY_TIME_OUT_VALIDATION
+from .types import Proxy
+
+# Regular expression pattern for validating proxy format
 proxy_pattern = re.compile(
     r'^'
     r'(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.){3}'
@@ -16,25 +23,42 @@ proxy_pattern = re.compile(
 )
 
 
-def is_valid_request(proxy: str) -> bool:
+def is_valid_request(proxy: str) -> Proxy | None:
     try:
-        res = requests.get(
-            constants.PROXY_PROXY_CHECKER_URL,
+        start_time = time.time()
+        response = requests.get(
+            PROXY_PROXY_CHECKER_URL,
             proxies={'http': proxy, 'https': proxy},
-            timeout=constants.PROXY_TIME_OUT_VALIDATION,
+            timeout=PROXY_TIME_OUT_VALIDATION,
         )
-        if res.status_code == 200:
-            return True
+        if response.status_code == 200:
+            duration = time.time() - start_time
+            data = response.json()
+            data['duration'] = duration
+            data['proxy'] = proxy
+            return data
     except requests.RequestException:
-        return False
-    return False
+        pass
+    return None
 
 
 def is_valid_format(proxy: str) -> bool:
-    if not isinstance(proxy, str) or not proxy.strip():
-        return False
-    return proxy_pattern.match(proxy) is not None
+    return bool(proxy.strip()) and proxy_pattern.match(proxy) is not None
 
 
-def is_valid(proxy: str) -> bool:
-    return is_valid_format(proxy) and is_valid_request(proxy)
+def is_valid(proxy: str) -> Proxy | None:
+    return is_valid_request(proxy) if is_valid_format(proxy) else None
+
+
+def valid_proxies(proxies: list[str], randomize=False) -> list[Proxy]:
+    with ThreadPoolExecutor(max_workers=10) as executor:
+        results = list(executor.map(is_valid, proxies))
+
+    valid_results = [result for result in results if result is not None]
+
+    if randomize:
+        random.shuffle(valid_results)
+    else:
+        valid_results.sort(key=lambda d: d['duration'])
+
+    return valid_results

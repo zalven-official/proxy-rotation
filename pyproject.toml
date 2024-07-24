@@ -30,6 +30,7 @@ distribution = true
 dev = [
     "notebook>=7.2.1",
     "jupyterlab>=4.2.4",
+    "proxy-checker>=0.6",
 ]
 [project.scripts]
 rea_beta_backend_toolsets = "rea_beta_backend_toolsets.run:main"
