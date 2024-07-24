@@ -42,7 +42,7 @@ class ProxyRotation:
     def remove_proxy(self, proxy: str):
         with self.lock:
             self.valid_proxies = [
-                p for p in self.valid_proxies if p['proxy'] != proxy
+                p for p in self.valid_proxies if p.proxy != proxy
             ]
             self.index = 0
 

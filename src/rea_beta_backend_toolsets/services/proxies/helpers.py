@@ -59,6 +59,6 @@ def valid_proxies(proxies: list[str], randomize=False) -> list[Proxy]:
     if randomize:
         random.shuffle(valid_results)
     else:
-        valid_results.sort(key=lambda d: d['duration'])
+        valid_results.sort(key=lambda d: d.duration)
 
     return valid_results
