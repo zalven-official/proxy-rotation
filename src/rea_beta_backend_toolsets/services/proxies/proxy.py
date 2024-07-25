@@ -7,10 +7,10 @@ from .helpers import valid_proxies
 from .types import Proxy
 
 
-class ProxyRotation:
+class ProxyRotationManager:
     def __init__(self, proxies: list[str]):
         """
-        Initialize the ProxyRotation with a list of proxies.
+        Initialize the ProxyRotationManager with a list of proxies.
 
         Args:
             proxies (List[str]): Initial list of proxy strings.

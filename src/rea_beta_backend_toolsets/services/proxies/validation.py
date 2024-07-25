@@ -14,7 +14,6 @@ from .constants import PROXY_PROXY_CHECKER_URL
 from .constants import PROXY_TIME_OUT_VALIDATION
 from .types import Proxy
 
-# Regular expression pattern for validating proxy format
 proxy_pattern = re.compile(
     r'^'
     r'(?:(?:25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])\.){3}'
@@ -28,10 +27,7 @@ proxy_pattern = re.compile(
 
 def check_proxy(url: str, proxy: str) -> bool:
     proxies = {'http': proxy, 'https': proxy}
-    max_retries = 3
-    delay = 2  # seconds
-
-    for _ in range(max_retries):
+    for _ in range(3):
         try:
             response = requests.get(
                 url, proxies=proxies, timeout=PROXY_TIME_OUT_VALIDATION,
@@ -46,7 +42,7 @@ def check_proxy(url: str, proxy: str) -> bool:
             ConnectionError,
             HTTPError,
         ):
-            time.sleep(delay)
+            time.sleep(2)
         except Exception:
             pass
 
@@ -95,10 +91,10 @@ def is_valid_request(proxy: str) -> Proxy | None:
 
 def is_valid(proxy: str) -> Proxy | None:
 
-    if not check_proxy('https://www.cloudflare.com/', proxy):
-        return None
+    # if not check_proxy('https://www.cloudflare.com/', proxy):
+    #     return None
 
-    if not check_proxy('https://www.google.com/', proxy):
-        return None
+    # if not check_proxy('https://www.google.com/', proxy):
+    #     return None
 
     return is_valid_request(proxy) if is_valid_format(proxy) else None

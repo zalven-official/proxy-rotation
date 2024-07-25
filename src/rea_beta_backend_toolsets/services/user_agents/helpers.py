@@ -1,32 +1,12 @@
 from __future__ import annotations
 
 import random
-import re
 from concurrent.futures import ThreadPoolExecutor
 
+import requests  # type: ignore
 
-def is_valid(user_agent: str) -> str | None:
-
-    if user_agent == '':
-        return None
-    common_keywords = [
-        'Mozilla', 'Chrome', 'Safari', 'Firefox', 'Opera', 'MSIE',
-        'Trident', 'Edge', 'AppleWebKit', 'Gecko', 'Windows NT',
-        'Macintosh', 'Linux', 'Android', 'iPhone', 'iPad',
-    ]
-
-    version_regex = re.compile(r'\d+(\.\d+)+')
-
-    if not any(keyword in user_agent for keyword in common_keywords):
-        return None
-
-    if not version_regex.search(user_agent):
-        return None
-
-    if not user_agent.startswith('Mozilla/'):
-        return None
-
-    return user_agent
+from .constants import USER_AGENT_LIST_URL
+from .validation import is_valid
 
 
 def valid_user_agents(user_agents: list[str], randomize=False) -> list[str]:
@@ -37,3 +17,13 @@ def valid_user_agents(user_agents: list[str], randomize=False) -> list[str]:
     if randomize:
         random.shuffle(valid_results)
     return valid_results
+
+
+def generate_unique_user_agents() -> list[str]:
+    response = requests.get(USER_AGENT_LIST_URL)
+    response.raise_for_status()
+
+    user_agents = list(set(response.text.splitlines()))
+    user_agents = valid_user_agents(user_agents)
+
+    return list(user_agents)
