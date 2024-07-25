@@ -17,7 +17,7 @@ class ProxyRotation:
         """
         self.lock = threading.Lock()
         self.index = 0
-        self.proxies = proxies
+        self.proxies = proxies.copy()
         self.valid_proxies: list[Proxy] = []
         self.validate_proxies()
 
@@ -88,5 +88,5 @@ class ProxyRotation:
         Validate and update the list of valid proxies from the initial set.
         """
         with self.lock:
-            proxies = list(set(self.proxies))  # Remove duplicates
+            proxies = list(set(self.proxies))
             self.valid_proxies = valid_proxies(proxies)

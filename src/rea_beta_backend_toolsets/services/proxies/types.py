@@ -4,15 +4,15 @@ from pydantic import BaseModel
 
 
 class Proxy(BaseModel):
-    ip: str
+    ip: str | None = None
     proxy: str
-    hostname: str
-    city: str
-    region: str
-    country: str
-    loc: str
-    org: str
-    postal: str
-    timezone: str
-    readme: str
-    duration: float
+    hostname: str | None = None
+    city: str | None = None
+    region: str | None = None
+    country: str | None = None
+    loc: str | None = None
+    org: str | None = None
+    postal: str | None = None
+    timezone: str | None = None
+    readme: str | None = None
+    duration: float | None = None
