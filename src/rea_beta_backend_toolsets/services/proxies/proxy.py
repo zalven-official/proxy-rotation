@@ -2,18 +2,27 @@ from __future__ import annotations
 
 import threading
 
-from .helpers import is_valid
+from .helpers import generate_unique_proxies
 from .helpers import valid_proxies
 from .types import Proxy
+from .validation import is_valid
 
 
 class ProxyRotationManager:
-    def __init__(self, proxies: list[str]):
+    def __init__(self, proxies: list[str] | None = None):
         self.lock = threading.Lock()
         self.index = 0
-        self.proxies = proxies.copy()
+        self.proxies = self._proxy_copy(proxies)
         self.valid_proxies: list[Proxy] = []
         self.validate_proxies()
+
+    def _proxy_copy(
+        self,
+        proxies: list[str] | None = None,
+    ) -> list[str]:
+        if proxies and len(proxies) > 0:
+            return proxies.copy()
+        return generate_unique_proxies()
 
     def get_next_proxy(self) -> Proxy:
 

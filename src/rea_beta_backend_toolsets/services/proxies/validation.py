@@ -51,6 +51,7 @@ def check_proxy(url: str, proxy: str) -> bool:
 
 def is_valid_format(proxy: str) -> bool:
     return (
+        proxy.strip() != '' and
         bool(proxy.strip())
         and proxy_pattern.match(proxy) is not None
     )
@@ -91,8 +92,8 @@ def is_valid_request(proxy: str) -> Proxy | None:
 
 def is_valid(proxy: str) -> Proxy | None:
 
-    # if not check_proxy('https://www.cloudflare.com/', proxy):
-    #     return None
+    if not check_proxy('https://www.cloudflare.com/', proxy):
+        return None
 
     # if not check_proxy('https://www.google.com/', proxy):
     #     return None
