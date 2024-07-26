@@ -34,6 +34,7 @@ dev = [
     "tqdm>=4.66.4",
     "types-requests>=2.32.0.20240712",
     "fake-useragent>=1.5.1",
+    "selenium>=4.23.1",
 ]
 [project.scripts]
 rea_beta_backend_toolsets = "rea_beta_backend_toolsets.run:main"

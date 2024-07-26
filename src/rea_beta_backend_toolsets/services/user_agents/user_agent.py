@@ -62,3 +62,7 @@ class UserAgentRotationManager:
         with self.lock:
             user_agents = list(set(self.user_agents))
             self.valid_user_agents = valid_user_agents(user_agents)
+
+    def status(self):
+        user_agents = len(self.valid_user_agents)
+        print(f'Available User-agents: {user_agents}')

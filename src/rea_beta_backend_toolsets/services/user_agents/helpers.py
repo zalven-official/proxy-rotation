@@ -5,12 +5,15 @@ from concurrent.futures import ThreadPoolExecutor
 
 import requests  # type: ignore
 
+from .constants import MAX_THREAD_WORKER_VALIDATION
 from .constants import USER_AGENT_LIST_URL
 from .validation import is_valid
 
 
 def valid_user_agents(user_agents: list[str], randomize=False) -> list[str]:
-    with ThreadPoolExecutor(max_workers=10) as executor:
+    with ThreadPoolExecutor(
+        max_workers=MAX_THREAD_WORKER_VALIDATION,
+    ) as executor:
         results = list(executor.map(is_valid, user_agents))
 
     valid_results = [result for result in results if result is not None]

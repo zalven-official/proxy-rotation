@@ -64,3 +64,7 @@ class ProxyRotationManager:
         with self.lock:
             proxies = list(set(self.proxies))
             self.valid_proxies = valid_proxies(proxies)
+
+    def status(self):
+        proxies = len(self.valid_proxies)
+        print(f'Available proxies: {proxies}')

@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 import requests  # type: ignore
 
+from .constants import MAX_THREAD_WORKER_VALIDATION
 from .constants import PROXY_LIST_URL
 from .types import Proxy
 from .validation import is_valid
@@ -12,7 +13,9 @@ from .validation import is_valid_format
 
 
 def valid_proxies(proxies: list[str], randomize=False) -> list[Proxy]:
-    with ThreadPoolExecutor(max_workers=10) as executor:
+    with ThreadPoolExecutor(
+        max_workers=MAX_THREAD_WORKER_VALIDATION,
+    ) as executor:
         results = list(executor.map(is_valid, proxies))
 
     valid_results = [result for result in results if result is not None]
