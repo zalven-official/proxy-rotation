@@ -9,6 +9,7 @@ import queue
 from logging.handlers import QueueHandler
 from logging.handlers import QueueListener
 
+from rea_beta_backend_toolsets.services.files import resource_path
 from typing_extensions import override
 
 from .constants import LOG_RECORD_BUILTIN_ATTRS
@@ -64,7 +65,9 @@ class NonErrorFilter(logging.Filter):
 
 
 def setup_logging():
-    config_file = pathlib.Path(LOGGING_CONFIG_FILE_PATH)
+    config_file = pathlib.Path(
+        resource_path(LOGGING_CONFIG_FILE_PATH),
+    )
     with open(config_file) as f_in:
         config = json.load(f_in)
 
@@ -74,7 +77,7 @@ def setup_logging():
         print(f'Error configuring logging: {e}')
         return
 
-    log_queue = queue.Queue(-1)  # Create an actual Queue instance
+    log_queue = queue.Queue(-1)
     queue_handler = QueueHandler(log_queue)
 
     handlers = {

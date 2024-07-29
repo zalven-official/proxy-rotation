@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 LOGGING_CONFIG_FILE_PATH: str = (
-    './services/logging/config.json'
+    './src/rea_beta_backend_toolsets/services/logging/config.json'
 )
+
 LOG_RECORD_BUILTIN_ATTRS = {
     'args',
     'asctime',
